@@ -65,20 +65,6 @@ export default function Desk() {
               {/* Paperweight & papers */}
               <Hotspot top="53%" left="3%"  width="13%" height="18%" label="The Papers"            onClick={() => router.push('/papers')} />
 
-              {/* Framed photo — Pete on the desk */}
-              <div
-                className="absolute cursor-pointer group"
-                style={{ top: "57%", left: "59%", width: "6%", transform: "rotate(-4deg)" }}
-                onClick={() => router.push('/about')}
-              >
-                <div className="border-[5px] border-amber-950 shadow-[0_6px_28px_rgba(0,0,0,0.95)] group-hover:border-amber-800 group-hover:shadow-[0_6px_28px_rgba(180,83,9,0.35)] transition-all duration-300 relative aspect-square overflow-hidden">
-                  <Image src="/pete.png" alt="Pete" fill className="object-cover" />
-                </div>
-                <div className="absolute -top-8 left-1/2 -translate-x-1/2 bg-zinc-900/95 text-zinc-300 font-mono text-xs px-2 py-1 opacity-0 group-hover:opacity-100 transition-opacity whitespace-nowrap">
-                  Pete Sherratt
-                </div>
-              </div>
-
               {/* Mindshare Advisory card */}
               <Hotspot top="60%" left="18%" width="9%"  height="8%"  label="Mindshare Advisory"    onClick={() => window.open('https://themindshareadvisory.substack.com/', '_blank')} />
 
