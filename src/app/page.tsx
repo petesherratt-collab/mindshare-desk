@@ -1,65 +1,120 @@
+"use client";
+import { useState } from "react";
+import { useRouter } from "next/navigation";
+import { motion, AnimatePresence } from "framer-motion";
 import Image from "next/image";
 
-export default function Home() {
+const Hotspot = ({
+  top, left, width, height, label, onClick, glow = "cyan",
+}: {
+  top: string; left: string; width: string; height: string;
+  label: string; onClick: () => void; glow?: "cyan" | "amber";
+}) => {
+  const glowStyle =
+    glow === "amber"
+      ? "hover:border-amber-400 hover:shadow-[0_0_15px_#f59e0b]"
+      : "hover:border-cyan-400 hover:shadow-[0_0_15px_cyan]";
   return (
-    <div className="flex flex-col flex-1 items-center justify-center bg-zinc-50 font-sans dark:bg-black">
-      <main className="flex flex-1 w-full max-w-3xl flex-col items-center justify-between py-32 px-16 bg-white dark:bg-black sm:items-start">
-        <Image
-          className="dark:invert"
-          src="/next.svg"
-          alt="Next.js logo"
-          width={100}
-          height={20}
-          priority
-        />
-        <div className="flex flex-col items-center gap-6 text-center sm:items-start sm:text-left">
-          <h1 className="max-w-xs text-3xl font-semibold leading-10 tracking-tight text-black dark:text-zinc-50">
-            To get started, edit the page.tsx file.
-          </h1>
-          <p className="max-w-md text-lg leading-8 text-zinc-600 dark:text-zinc-400">
-            Looking for a starting point or more instructions? Head over to{" "}
-            <a
-              href="https://vercel.com/templates?framework=next.js&utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-              className="font-medium text-zinc-950 dark:text-zinc-50"
-            >
-              Templates
-            </a>{" "}
-            or the{" "}
-            <a
-              href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-              className="font-medium text-zinc-950 dark:text-zinc-50"
-            >
-              Learning
-            </a>{" "}
-            center.
-          </p>
-        </div>
-        <div className="flex flex-col gap-4 text-base font-medium sm:flex-row">
-          <a
-            className="flex h-12 w-full items-center justify-center gap-2 rounded-full bg-foreground px-5 text-background transition-colors hover:bg-[#383838] dark:hover:bg-[#ccc] md:w-[158px]"
-            href="https://vercel.com/new?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            <Image
-              className="dark:invert"
-              src="/vercel.svg"
-              alt="Vercel logomark"
-              width={16}
-              height={16}
-            />
-            Deploy Now
-          </a>
-          <a
-            className="flex h-12 w-full items-center justify-center rounded-full border border-solid border-black/[.08] px-5 transition-colors hover:border-transparent hover:bg-black/[.04] dark:border-white/[.145] dark:hover:bg-[#1a1a1a] md:w-[158px]"
-            href="https://nextjs.org/docs?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Documentation
-          </a>
-        </div>
-      </main>
-    </div>
+    <motion.div
+      className={`absolute cursor-pointer group border-2 border-transparent ${glowStyle} transition-all duration-300`}
+      style={{ top, left, width, height }}
+      whileHover={{ scale: 1.01 }}
+      whileTap={{ scale: 0.99 }}
+      onClick={onClick}
+    >
+      <div className="absolute -top-10 left-1/2 -translate-x-1/2 bg-zinc-900/95 text-zinc-300 font-mono text-xs px-2 py-1 opacity-0 group-hover:opacity-100 transition-opacity whitespace-nowrap">
+        {label}
+      </div>
+    </motion.div>
+  );
+};
+
+export default function Desk() {
+  const [viewMode, setViewMode] = useState('consultancy');
+  const router = useRouter();
+
+  return (
+    <AnimatePresence mode="wait">
+      <motion.div
+        key={viewMode}
+        initial={{ opacity: 0 }}
+        animate={{ opacity: 1 }}
+        exit={{ opacity: 0 }}
+        transition={{ duration: 1.0 }}
+      >
+        <main className="relative w-full h-screen bg-black flex items-center justify-center overflow-hidden font-mono">
+          {viewMode === 'consultancy' ? (
+            <div className="relative w-full max-w-[1920px] aspect-[16/9]">
+              <Image src="/offie_papers2.png" alt="Desk" fill className="object-cover" priority />
+
+              {/* The Cold Eye — framed newspaper, left wall */}
+              <Hotspot top="0%"  left="0%"  width="18%" height="51%" label="The Cold Eye"          onClick={() => {}} />
+
+              {/* Wall portraits */}
+              <Hotspot top="10%" left="29%" width="10%" height="20%" label="Jack London"           onClick={() => window.open('https://the-salon-ten.vercel.app/index.html#london', '_blank')} />
+              <Hotspot top="10%" left="38%" width="11%" height="20%" label="Niccolò Machiavelli"   onClick={() => window.open('https://the-salon-ten.vercel.app/index.html#machiavelli', '_blank')} />
+              <Hotspot top="10%" left="50%" width="11%" height="20%" label="Thomas Hobbes"          onClick={() => window.open('https://the-salon-ten.vercel.app/index.html#hobbes', '_blank')} />
+              <Hotspot top="10%" left="62%" width="9%"  height="20%" label="Michel de Montaigne"    onClick={() => window.open('https://the-salon-ten.vercel.app/index.html#montaigne', '_blank')} />
+
+              {/* Screen — Distributed Ethics diagram */}
+              <Hotspot top="27%" left="36%" width="28%" height="34%" label="Distributed Ethics"    onClick={() => window.open('https://distributed-ethics-site2.vercel.app/', '_blank')} />
+
+              {/* Dodecahedron sculpture */}
+              <Hotspot top="45%" left="25%" width="10%" height="15%" label="The Sculpture"         onClick={() => {}} />
+
+              {/* Paperweight & papers */}
+              <Hotspot top="53%" left="3%"  width="13%" height="18%" label="The Papers"            onClick={() => router.push('/papers')} />
+
+              {/* Mindshare Advisory card */}
+              <Hotspot top="60%" left="18%" width="9%"  height="8%"  label="Mindshare Advisory"    onClick={() => window.open('https://themindshareadvisory.substack.com/', '_blank')} />
+
+              {/* Persona cards — spread across centre desk */}
+              <Hotspot top="69%" left="31%" width="31%" height="22%" label="The Salon"             onClick={() => window.open('https://the-salon-ten.vercel.app', '_blank')} />
+
+              {/* Iron Meridian collector's book — right */}
+              <Hotspot top="50%" left="65%" width="11%" height="12%" label="Iron Meridian"         onClick={() => {}} />
+
+              {/* The Practice book — far right */}
+              <Hotspot top="65%" left="68%" width="24%" height="26%" label="The Practice"          onClick={() => {}} />
+
+              {/* Iron Meridian magazine pile — enters the detective office */}
+              <Hotspot top="70%" left="5%"  width="24%" height="21%" label="Iron Meridian"         onClick={() => setViewMode('private-eye')} />
+            </div>
+          ) : (
+            /* ── Private Eye Office ─────────────────────────────── */
+            <div className="relative w-full max-w-[1920px] aspect-[16/9]">
+              <Image src="/private-eye-office.png" alt="A. Cade — Private Investigations" fill className="object-cover" priority unoptimized />
+
+              {/* Door — frosted glass panel, full left column */}
+              <Hotspot glow="amber" top="0%"  left="0%"  width="28%" height="100%" label="← Leave"                   onClick={() => setViewMode('consultancy')} />
+
+              {/* The Salon neon sign — vertical sign, far left of window */}
+              <Hotspot glow="amber" top="8%"  left="43%" width="6%"  height="14%"  label="The Salon"                  onClick={() => window.open('https://the-salon-ten.vercel.app', '_blank')} />
+
+              {/* Green banker's lamp — shade + neck + base */}
+              <Hotspot glow="amber" top="29%" left="29%" width="14%" height="32%"  label="The Lamp"                   onClick={() => {}} />
+
+              {/* Rotary telephone — black phone, left of typewriter */}
+              <Hotspot glow="amber" top="46%" left="35%" width="12%" height="20%"  label="Contact"                    onClick={() => {}} />
+
+              {/* Typewriter — centre desk */}
+              <Hotspot glow="amber" top="40%" left="45%" width="16%" height="28%"  label="The Typewriter"             onClick={() => {}} />
+
+              {/* Iron Meridian — case files, newspaper & confidential folders */}
+              <Hotspot glow="amber" top="57%" left="52%" width="31%" height="31%"  label="Iron Meridian — Case Files" onClick={() => {}} />
+
+              {/* A. Cade — the detective figure */}
+              <Hotspot glow="amber" top="10%" left="67%" width="16%" height="77%"  label="A. Cade"                    onClick={() => router.push('/detective')} />
+
+              {/* Iron Meridian collector's editions — right shelf */}
+              <Hotspot glow="amber" top="29%" left="83%" width="10%" height="34%"  label="Iron Meridian"              onClick={() => {}} />
+
+              {/* Jim Beam — bourbon bottle & glass */}
+              <Hotspot glow="amber" top="48%" left="86%" width="6%"  height="27%"  label="Jim Beam"                   onClick={() => {}} />
+            </div>
+          )}
+        </main>
+      </motion.div>
+    </AnimatePresence>
   );
 }
