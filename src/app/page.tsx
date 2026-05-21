@@ -45,40 +45,43 @@ export default function Desk() {
         <main className="relative w-full h-screen bg-black flex items-center justify-center overflow-hidden font-mono">
           {viewMode === 'consultancy' ? (
             <div className="relative w-full max-w-[1920px] aspect-[16/9]">
-              <Image src="/offie_papers2.png" alt="Desk" fill className="object-cover" priority />
+              <Image src="/office_papers3.png" alt="Desk" fill className="object-cover" priority />
 
               {/* The Cold Eye — framed newspaper, left wall */}
               <Hotspot top="0%"  left="0%"  width="18%" height="51%" label="The Cold Eye"          onClick={() => {}} />
 
               {/* Wall portraits */}
-              <Hotspot top="10%" left="29%" width="10%" height="20%" label="Jack London"           onClick={() => window.open('https://the-salon-ten.vercel.app/index.html#london', '_blank')} />
-              <Hotspot top="10%" left="38%" width="11%" height="20%" label="Niccolò Machiavelli"   onClick={() => window.open('https://the-salon-ten.vercel.app/index.html#machiavelli', '_blank')} />
-              <Hotspot top="10%" left="50%" width="11%" height="20%" label="Thomas Hobbes"          onClick={() => window.open('https://the-salon-ten.vercel.app/index.html#hobbes', '_blank')} />
-              <Hotspot top="10%" left="62%" width="9%"  height="20%" label="Michel de Montaigne"    onClick={() => window.open('https://the-salon-ten.vercel.app/index.html#montaigne', '_blank')} />
+              <Hotspot top="10%" left="28%" width="10%" height="20%" label="Jack London"           onClick={() => window.open('https://the-salon-ten.vercel.app/index.html#london', '_blank')} />
+              <Hotspot top="10%" left="39%" width="10%" height="20%" label="Niccolò Machiavelli"   onClick={() => window.open('https://the-salon-ten.vercel.app/index.html#machiavelli', '_blank')} />
+              <Hotspot top="10%" left="50%" width="10%" height="20%" label="Thomas Hobbes"          onClick={() => window.open('https://the-salon-ten.vercel.app/index.html#hobbes', '_blank')} />
+              <Hotspot top="10%" left="61%" width="10%" height="20%" label="Michel de Montaigne"    onClick={() => window.open('https://the-salon-ten.vercel.app/index.html#montaigne', '_blank')} />
 
               {/* Screen — Distributed Ethics diagram */}
-              <Hotspot top="27%" left="36%" width="28%" height="34%" label="Distributed Ethics"    onClick={() => window.open('https://distributed-ethics-site2.vercel.app/', '_blank')} />
+              <Hotspot top="22%" left="36%" width="28%" height="34%" label="Distributed Ethics"    onClick={() => window.open('https://distributed-ethics-site2.vercel.app/', '_blank')} />
 
               {/* Dodecahedron sculpture */}
-              <Hotspot top="45%" left="25%" width="10%" height="15%" label="The Sculpture"         onClick={() => {}} />
+              <Hotspot top="40%" left="23%" width="15%" height="24%" label="The Sculpture"         onClick={() => {}} />
 
               {/* Paperweight & papers */}
-              <Hotspot top="53%" left="3%"  width="13%" height="18%" label="The Papers"            onClick={() => router.push('/papers')} />
+              <Hotspot top="51%" left="3%"  width="13%" height="18%" label="The Papers"            onClick={() => router.push('/papers')} />
 
               {/* Mindshare Advisory card */}
-              <Hotspot top="60%" left="18%" width="9%"  height="8%"  label="Mindshare Advisory"    onClick={() => window.open('https://themindshareadvisory.substack.com/', '_blank')} />
+              <Hotspot top="51%" left="17%" width="13%" height="9%"  label="Mindshare Advisory"    onClick={() => window.open('https://themindshareadvisory.substack.com/', '_blank')} />
+
+              {/* Pete Sherratt — framed photo, right of desk */}
+              <Hotspot top="33%" left="73%" width="20%" height="27%" label="Pete Sherratt"         onClick={() => router.push('/about')} />
 
               {/* Persona cards — spread across centre desk */}
-              <Hotspot top="69%" left="31%" width="31%" height="22%" label="The Salon"             onClick={() => window.open('https://the-salon-ten.vercel.app', '_blank')} />
+              <Hotspot top="66%" left="30%" width="36%" height="25%" label="The Salon"             onClick={() => window.open('https://the-salon-ten.vercel.app', '_blank')} />
 
-              {/* Iron Meridian collector's book — right */}
-              <Hotspot top="50%" left="65%" width="11%" height="12%" label="Iron Meridian"         onClick={() => {}} />
+              {/* Iron Meridian — right stack */}
+              <Hotspot top="58%" left="66%" width="27%" height="16%" label="Iron Meridian"         onClick={() => {}} />
 
-              {/* The Practice book — far right */}
-              <Hotspot top="65%" left="68%" width="24%" height="26%" label="The Practice"          onClick={() => {}} />
+              {/* The Practice book — bottom right */}
+              <Hotspot top="69%" left="62%" width="30%" height="16%" label="The Practice"          onClick={() => {}} />
 
               {/* Iron Meridian magazine pile — enters the detective office */}
-              <Hotspot top="70%" left="5%"  width="24%" height="21%" label="Iron Meridian"         onClick={() => setViewMode('private-eye')} />
+              <Hotspot top="68%" left="5%"  width="24%" height="23%" label="Iron Meridian"         onClick={() => setViewMode('private-eye')} />
             </div>
           ) : (
             /* ── Private Eye Office ─────────────────────────────── */
