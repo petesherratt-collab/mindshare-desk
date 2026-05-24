@@ -2,7 +2,7 @@ Mindshare Desk
 The personal website of Peter Sherratt — writer, persona architect, builder of AI-augmented publications, and author of the Distributed Ethics framework.
 Live site → mindshare-desk.vercel.app
 
-About
+About: 
 This is my desk. Everything I write, build and publish lands here first or eventually.
 I work at the seam between AI tooling and editorial craft — building publications, personas and frameworks that take what large language models can now do and put it to a clear editorial purpose. The work spans governance, fiction, satire, political philosophy and design.
 The site is built around the image of a working desk: papers, sculpture, practice. Each surface is a way in to a different piece of work.
