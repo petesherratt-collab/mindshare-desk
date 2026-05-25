@@ -13,6 +13,14 @@ type Lead = {
   notes?: string;
 };
 
+type OpenRouterResponse = {
+  choices?: Array<{
+    message?: {
+      content?: string;
+    };
+  }>;
+};
+
 const systemPrompt = `You are the AI receptionist for Mindshare Desk, the personal website of Peter Sherratt.
 You help visitors orient themselves around Distributed Ethics, Mindshare Advisory, The Salon, The Cold Eye, Iron Meridian, and consultancy enquiries.
 You are concise, calm, and editorially sharp. You do not invent appointments, fees, or private contact details.
@@ -25,26 +33,29 @@ export async function POST(request: Request) {
     const messages = Array.isArray(body.messages) ? body.messages.slice(-10) : [];
     const lead = body.lead || {};
 
-    if (!process.env.ANTHROPIC_API_KEY) {
+    if (!process.env.OPENROUTER_API_KEY) {
       return NextResponse.json({ reply: fallbackReply(messages.at(-1)?.content || "") });
     }
 
-    const response = await fetch("https://api.anthropic.com/v1/messages", {
+    const response = await fetch("https://openrouter.ai/api/v1/chat/completions", {
       method: "POST",
       headers: {
         "content-type": "application/json",
-        "x-api-key": process.env.ANTHROPIC_API_KEY,
-        "anthropic-version": "2023-06-01",
+        authorization: `Bearer ${process.env.OPENROUTER_API_KEY}`,
+        "http-referer": process.env.NEXT_PUBLIC_SITE_URL || "https://mindshare-desk.vercel.app",
+        "x-title": "Mindshare Desk",
       },
       body: JSON.stringify({
-        model: process.env.ANTHROPIC_MODEL || "claude-3-5-haiku-latest",
+        model: process.env.OPENROUTER_MODEL || "anthropic/claude-3.5-haiku",
         max_tokens: 260,
         temperature: 0.4,
-        system: `${systemPrompt}\n\nCurrent handoff details: ${JSON.stringify(lead)}`,
-        messages: messages.map((message) => ({
-          role: message.role,
-          content: message.content,
-        })),
+        messages: [
+          { role: "system", content: `${systemPrompt}\n\nCurrent handoff details: ${JSON.stringify(lead)}` },
+          ...messages.map((message) => ({
+            role: message.role,
+            content: message.content,
+          })),
+        ],
       }),
     });
 
@@ -52,8 +63,8 @@ export async function POST(request: Request) {
       return NextResponse.json({ reply: fallbackReply(messages.at(-1)?.content || "") });
     }
 
-    const data = (await response.json()) as { content?: Array<{ type: string; text?: string }> };
-    const reply = data.content?.find((item) => item.type === "text")?.text?.trim();
+    const data = (await response.json()) as OpenRouterResponse;
+    const reply = data.choices?.[0]?.message?.content?.trim();
 
     return NextResponse.json({ reply: reply || fallbackReply(messages.at(-1)?.content || "") });
   } catch {
