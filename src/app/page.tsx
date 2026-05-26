@@ -99,7 +99,7 @@ export default function Desk() {
               <Hotspot glow="amber" top="29%" left="29%" width="14%" height="32%"  label="The Lamp"                   onClick={() => {}} />
 
               {/* Rotary telephone - black phone, left of typewriter */}
-              <Hotspot glow="amber" top="46%" left="35%" width="12%" height="20%"  label="Contact"                    onClick={() => {}} />
+              <Hotspot glow="amber" top="46%" left="35%" width="12%" height="20%"  label="Reception"                 onClick={() => router.push('/receptionist')} />
 
               {/* Typewriter - centre desk */}
               <Hotspot glow="amber" top="40%" left="45%" width="16%" height="28%"  label="The Typewriter"             onClick={() => {}} />
