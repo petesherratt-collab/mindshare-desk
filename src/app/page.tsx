@@ -4,6 +4,8 @@ import { useRouter } from "next/navigation";
 import { motion, AnimatePresence } from "framer-motion";
 import Image from "next/image";
 
+const ironMeridianAmazonUrl = "https://www.amazon.co.uk/dp/B0GX2VM2QT?binding=kindle_edition&qid=1779790111&sr=8-10&ref=dbs_dp_rwt_sb_pc_tkin";
+
 const Hotspot = ({
   top, left, width, height, label, onClick, glow = "cyan",
 }: {
@@ -75,7 +77,7 @@ export default function Desk() {
               <Hotspot top="66%" left="30%" width="36%" height="25%" label="The Salon"             onClick={() => window.open('https://the-salon-ten.vercel.app', '_blank')} />
 
               {/* Iron Meridian - right stack */}
-              <Hotspot top="58%" left="66%" width="27%" height="16%" label="Iron Meridian"         onClick={() => {}} />
+              <Hotspot top="58%" left="66%" width="27%" height="16%" label="Iron Meridian"         onClick={() => window.open(ironMeridianAmazonUrl, '_blank')} />
 
               {/* The Practice book - bottom right */}
               <Hotspot top="69%" left="62%" width="30%" height="16%" label="The Practice"          onClick={() => {}} />
@@ -103,13 +105,13 @@ export default function Desk() {
               <Hotspot glow="amber" top="40%" left="45%" width="16%" height="28%"  label="The Typewriter"             onClick={() => {}} />
 
               {/* Iron Meridian - case files, newspaper & confidential folders */}
-              <Hotspot glow="amber" top="57%" left="52%" width="31%" height="31%"  label="Iron Meridian - Case Files" onClick={() => {}} />
+              <Hotspot glow="amber" top="57%" left="52%" width="31%" height="31%"  label="Iron Meridian - Case Files" onClick={() => window.open(ironMeridianAmazonUrl, '_blank')} />
 
               {/* A. Cade - the detective figure */}
               <Hotspot glow="amber" top="10%" left="67%" width="16%" height="77%"  label="A. Cade"                    onClick={() => router.push('/detective')} />
 
               {/* Iron Meridian collector's editions - right shelf */}
-              <Hotspot glow="amber" top="29%" left="83%" width="10%" height="34%"  label="Iron Meridian"              onClick={() => {}} />
+              <Hotspot glow="amber" top="29%" left="83%" width="10%" height="34%"  label="Iron Meridian"              onClick={() => window.open(ironMeridianAmazonUrl, '_blank')} />
 
               {/* Jim Beam - bourbon bottle & glass */}
               <Hotspot glow="amber" top="48%" left="86%" width="6%"  height="27%"  label="Jim Beam"                   onClick={() => {}} />
