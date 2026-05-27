@@ -1,6 +1,6 @@
 "use client";
 
-import { FormEvent, useMemo, useRef, useState } from "react";
+import { FormEvent, useEffect, useMemo, useRef, useState } from "react";
 import { useRouter } from "next/navigation";
 
 type Message = {
@@ -44,11 +44,24 @@ export default function ReceptionistPage() {
   const [input, setInput] = useState("");
   const [isThinking, setIsThinking] = useState(false);
   const messagesRef = useRef<HTMLOListElement>(null);
+  const hasLoadedHireBrief = useRef(false);
 
   const leadSummary = useMemo(
     () => [lead.name, lead.email, lead.phone, lead.intent].filter(Boolean).join(" · "),
     [lead]
   );
+
+  useEffect(() => {
+    if (hasLoadedHireBrief.current || typeof window === "undefined") return;
+
+    const params = new URLSearchParams(window.location.search);
+    if (params.get("hire") !== "1") return;
+
+    hasLoadedHireBrief.current = true;
+    const hireBrief = buildHireBrief(params);
+    setInput(hireBrief);
+    setLead(captureLeadDetails(hireBrief, { ...initialLead, intent: "Hire enquiry" }));
+  }, []);
 
   async function submitMessage(event?: FormEvent<HTMLFormElement>, preset?: string) {
     event?.preventDefault();
@@ -206,10 +219,30 @@ export default function ReceptionistPage() {
   );
 }
 
+function buildHireBrief(params: URLSearchParams) {
+  const fields = [
+    ["Name", params.get("name")],
+    ["Email", params.get("email")],
+    ["Project type", params.get("project")],
+    ["Timeline", params.get("timeline")],
+    ["Budget / scale", params.get("budget")],
+    ["Brief", params.get("brief")],
+  ].filter(([, value]) => value && value.trim());
+
+  if (fields.length === 0) {
+    return "I am interested in hiring Peter. Can you help prepare a brief for follow-up?";
+  }
+
+  return [
+    "I am interested in hiring Peter. Here is my brief:",
+    ...fields.map(([label, value]) => `${label}: ${value}`),
+  ].join("\n");
+}
+
 function captureLeadDetails(text: string, currentLead: Lead): Lead {
   const email = text.match(/[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}/i)?.[0] || currentLead.email;
   const phone = text.match(/(?:\+?\d[\d\s().-]{7,}\d)/)?.[0] || currentLead.phone;
-  const nameMatch = text.match(/\b(?:my name is|i am|i'm|this is)\s+([a-z][a-z\s'-]{1,40})/i);
+  const nameMatch = text.match(/\b(?:my name is|i am|i'm|this is|name:)\s+([a-z][a-z\s'-]{1,40})/i);
   const name = nameMatch ? titleCase(nameMatch[1].trim()) : currentLead.name;
   const intent = inferIntent(text, currentLead.intent);
 
@@ -223,6 +256,7 @@ function captureLeadDetails(text: string, currentLead: Lead): Lead {
 }
 
 function inferIntent(text: string, fallback: string) {
+  if (/hire|brief|budget|project type/i.test(text)) return "Hire enquiry";
   if (/distributed ethics|policy|governance|audit/i.test(text)) return "Distributed Ethics enquiry";
   if (/consult|call|conversation|meeting|follow/i.test(text)) return "Follow-up request";
   if (/publication|salon|iron meridian|cold eye|substack/i.test(text)) return "Publication enquiry";
@@ -237,6 +271,10 @@ function titleCase(value: string) {
 }
 
 function fallbackReply(text: string) {
+  if (/hire|brief|budget|project type/i.test(text)) {
+    return "I can turn this into a concise handoff for Peter. Please add anything important about audience, deadline, constraints, or what a good outcome would look like.";
+  }
+
   if (/distributed ethics|governance|audit/i.test(text)) {
     return "Distributed Ethics is the strongest starting point. I can note whether your interest is policy, research, deployment, or insurance, then prepare a useful handoff for Peter.";
   }
