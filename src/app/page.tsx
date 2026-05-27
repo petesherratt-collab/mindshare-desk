@@ -80,7 +80,7 @@ export default function Desk() {
               <Hotspot top="58%" left="66%" width="27%" height="16%" label="Iron Meridian"         onClick={() => window.open(ironMeridianAmazonUrl, '_blank')} />
 
               {/* The Practice book - bottom right */}
-              <Hotspot top="69%" left="62%" width="30%" height="16%" label="The Practice"          onClick={() => {}} />
+              <Hotspot top="69%" left="62%" width="30%" height="16%" label="The Practice"          onClick={() => router.push('/practice')} />
 
               {/* Iron Meridian magazine pile - enters the detective office */}
               <Hotspot top="68%" left="5%"  width="24%" height="23%" label="Iron Meridian"         onClick={() => setViewMode('private-eye')} />
