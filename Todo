@@ -1,0 +1,50 @@
+# mindshare-desk — TODO
+
+> Working backlog for petesherratt-collab/mindshare-desk.
+> **What this is:** Peter's personal website — a hub linking out to his work (The Salon, Iron Meridian, Distributed Ethics, etc.) plus a contact page. Next.js app, deploys to mindshare-desk.vercel.app.
+> Status markers: `[ ]` open · `[~]` in progress · `[x]` done · `[!]` blocked.
+> Last reviewed: 2026-06-26
+
+---
+
+## 0. Current state
+
+Near-empty `create-next-app` scaffold (7 commits). README is still Next.js boilerplate; `src/app` is essentially empty; `AGENTS.md` + `CLAUDE.md` already present. Nothing brand-specific built yet. The work below is "scaffold → real site," not bug-fixing.
+
+## 1. Decide before building (cheap, prevents rework)
+
+- [ ] **Lock the project list the hub will link to.** Confirmed so far: The Salon, Iron Meridian, Distributed Ethics framework. Decide the full set and the order they appear — e.g. also The Cold Eye? Meridian Accord (consultancy)? The Substack? Each is a card/link on the landing page.
+- [ ] **Decide the audience framing.** Same site can't equally serve prospective insurance-sector clients (Meridian Accord) *and* readers/Janeites/pulp fans. Pick the primary visitor and let the rest be secondary, or the landing copy will be muddled. (Doesn't need to be elaborate — just decided.)
+- [ ] **Decide contact mechanism.** Static mailto, a form posting to an email service (Formspree/Resend/etc.), or a calendar link? Determines whether the contact page needs a backend route or is pure static.
+
+## 2. Replace the scaffold (do first — it's what's deployed right now)
+
+- [ ] **Replace the boilerplate README** with a real one: what the site is, the stack, local-dev + deploy notes. (Right now the repo's front door is verbatim create-next-app text.)
+- [ ] **Build the landing page** (`src/app/page.tsx`) — replace the starter page. Hero / who-you-are line, then the project cards.
+- [ ] **Confirm what's live at mindshare-desk.vercel.app** — currently the starter page is publicly deployed under your brand name. Either ship a real page or set the deploy to a holding state until §2 lands.
+
+## 3. Core build — the hub itself
+
+- [ ] **Project cards / link-out section.** One card per project (title, one-line description, link). The core function of the whole site. Decide: external links straight to each project's live URL (the-salon-ten.vercel.app, the DE site, etc.), or internal detail pages per project?
+- [ ] **Contact page.** Per the §1 decision. Keep it dead simple.
+- [ ] **About / bio.** Short. Who you are, the Mindshare Advisory framing, what ties the projects together (AI strategy / editorial intelligence / distributed ethics).
+- [ ] **Shared layout + nav** so pages aren't islands — header with your name/brand, footer with the key external links (Substack, GitHub, the DE DOI).
+
+## 4. Brand & polish (after structure works)
+
+- [ ] **Visual identity.** The scaffold ships with default Geist font and no design. Decide a minimal aesthetic that matches the Mindshare brand rather than looking like every other create-next-app site. (If you want, the `frontend-design` skill is built for exactly this — distinctive type/colour direction, not templated defaults.)
+- [ ] **Metadata / OG tags / favicon** so links to the site preview properly when shared. Currently inherits GitHub's generic OG image.
+- [ ] **Responsive check** — it's a portfolio; people will open it on phones.
+
+## 5. Housekeeping (verify, low priority)
+
+- [ ] **Public repo, brand-named.** Confirm `.gitignore` covers `.env*` before any API key (contact-form service, analytics) gets added. The default Next `.gitignore` usually handles this — just confirm before wiring up §1's contact backend.
+- [ ] **Check `AGENTS.md` / `CLAUDE.md`** are still accurate to the current plan — they were committed early and may predate this scope.
+
+---
+
+### Quick status
+
+- **Blocking the build:** §1 decisions (project list, audience, contact mechanism). Everything in §2–3 is faster and cleaner once these are fixed.
+- **Most urgent regardless:** §2 — a brand-named site is publicly serving boilerplate right now.
+- **Don't start §4** (design/polish) until §3 structure works — styling an unbuilt site is rework.
